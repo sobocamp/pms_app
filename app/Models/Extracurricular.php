@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Models\User;
 use App\Models\ExtracurricularRegistration;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Extracurricular
@@ -23,6 +23,7 @@ use App\Models\ExtracurricularRegistration;
  * @property-read \Illuminate\Database\Eloquent\Collection|ExtracurricularRegistration[] $registrations
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $pembina
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $participants
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $approvedParticipants
  */
 class Extracurricular extends Model
 {
@@ -71,5 +72,19 @@ class Extracurricular extends Model
         return $this->belongsToMany(User::class, 'extracurricular_registrations')
                     ->withPivot('status', 'registration_period_id')
                     ->withTimestamps();
+    }
+
+    /**
+     * Relasi many-to-many ke User sebagai peserta yang diterima.
+     *
+     * Mengambil semua peserta yang mendaftar ekstrakurikuler ini melalui pivot
+     * 'extracurricular_registrations' dengan status 'approved'.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function approvedParticipants()
+    {
+        return $this->belongsToMany(User::class, 'extracurricular_registrations')
+            ->wherePivot('status', 'approved');
     }
 }
