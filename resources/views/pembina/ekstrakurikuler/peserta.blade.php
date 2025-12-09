@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.template')
 
 @section('title', $title)
 
@@ -25,7 +25,7 @@
                             <th style="width: 10px;">No.</th>
                             <th>Nama</th>
                             <th width="100px;">Status</th>
-                            <th width="200px;">Aksi</th>
+                            <th width="120px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,23 +43,23 @@
                                 @endif
                             </td>
                             <td class="text-nowrap">
-                                <a onclick="return confirm('Yakin ingin menyetujui pendaftaran ini?')" data-bs-toggle="tooltip" data-bs-placement="top" class="btn btn-sm btn-primary"
+                                <a onclick="return confirm('Yakin ingin menyetujui pendaftaran ini?')"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" class="btn btn-sm btn-primary"
                                     href="{{ route('extracurricular.approve', ['id' => $extracurricular->id, 'user_id' => $item->id]) }}"
                                     title="Approve">
                                     <i data-feather="check-circle"></i>
-                                    Approve
                                 </a>
-                                <a onclick="return confirm('Yakin ingin menunda pendaftaran ini?')" data-bs-toggle="tooltip" data-bs-placement="top" class="btn btn-sm btn-warning"
+                                <a onclick="return confirm('Yakin ingin menunda pendaftaran ini?')"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" class="btn btn-sm btn-warning"
                                     href="{{ route('extracurricular.pending', ['id' => $extracurricular->id, 'user_id' => $item->id]) }}"
                                     title="Pending">
                                     <i data-feather="minus-circle"></i>
-                                    Pending
                                 </a>
-                                <a onclick="return confirm('Yakin ingin menolak pendaftaran ini?')" data-bs-toggle="tooltip" data-bs-placement="top" class="btn btn-sm btn-danger"
+                                <a onclick="return confirm('Yakin ingin menolak pendaftaran ini?')"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" class="btn btn-sm btn-danger"
                                     href="{{ route('extracurricular.reject', ['id' => $extracurricular->id, 'user_id' => $item->id]) }}"
                                     title="Reject">
                                     <i data-feather="x-circle"></i>
-                                    Reject
                                 </a>
                             </td>
                         </tr>

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ToastType;
-use App\Enums\ToastMessage;
-use App\Helpers\RedirectHelper;
+use App\Enums\RedirectWithToast;
 use App\Models\RegistrationPeriod;
 use App\Http\Requests\PeriodeRequest;
 
@@ -23,7 +21,7 @@ class PeriodeController extends Controller
     {
         $periode = RegistrationPeriod::paginate(10);
 
-        return view('admin.periode.index', [
+        return $this->render('admin.periode.index', [
             'title' => 'Periode Pendaftaran',
             'periode' => $periode
         ]);
@@ -38,7 +36,7 @@ class PeriodeController extends Controller
      */
     public function create()
     {
-        return view('admin.periode.create', [
+        return $this->render('admin.periode.create', [
             'title' => 'Tambah Periode Pendaftaran'
         ]);
     }
@@ -65,11 +63,12 @@ class PeriodeController extends Controller
         RegistrationPeriod::create($request->validated());
 
         // Redirect dengan toast
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('periode.index'),
-            ToastType::SUCCESS,
-            ToastMessage::PERIOD_CREATE_SUCCESS
-        );
+        return RedirectWithToast::PERIOD_CREATE_SUCCESS->redirect('periode.index');
+        // return RedirectHelper::redirectWithToast(
+        //     redirect()->route('periode.index'),
+        //     ToastType::SUCCESS,
+        //     ToastMessage::PERIOD_CREATE_SUCCESS
+        // );
     }
 
     /**
@@ -85,7 +84,7 @@ class PeriodeController extends Controller
     {
         $periode = RegistrationPeriod::find($id);
 
-        return view('admin.periode.show', [
+        return $this->render('admin.periode.show', [
             'title' => 'Detail Periode Pendaftaran',
             'periode' => $periode
         ]);
@@ -104,7 +103,7 @@ class PeriodeController extends Controller
     {
         $periode = RegistrationPeriod::find($id);
 
-        return view('admin.periode.edit', [
+        return $this->render('admin.periode.edit', [
             'title' => 'Edit Periode Pendaftaran',
             'periode' => $periode
         ]);
@@ -133,11 +132,7 @@ class PeriodeController extends Controller
         $periode->update($request->validated());
 
         // Redirect dengan toast
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('periode.index'),
-            ToastType::SUCCESS,
-            ToastMessage::PERIOD_UPDATE_SUCCESS
-        );
+        return RedirectWithToast::PERIOD_UPDATE_SUCCESS->redirect('periode.index');
     }
 
     /**
@@ -155,10 +150,6 @@ class PeriodeController extends Controller
         RegistrationPeriod::find($id)->delete();
 
         // Redirect dengan toast
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('periode.index'),
-            ToastType::SUCCESS,
-            ToastMessage::PERIOD_DELETE_SUCCESS
-        );
+        return RedirectWithToast::PERIOD_DELETE_SUCCESS->redirect('periode.index');
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Enums\ParticipantStatus;
-use App\Traits\ExtracurricularHelper;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Extracurricular;
-use App\Http\Requests\EkstrakurikulerRequest;
 use App\Enums\RedirectWithToast;
+use App\Models\User;
+use App\Traits\ExtracurricularHelper;
+use App\Models\Extracurricular;
+use Illuminate\Support\Facades\Auth;
+use App\Enums\ParticipantStatus;
+use App\Http\Requests\EkstrakurikulerRequest;
 
 class EkstrakurikulerController extends Controller
 {
@@ -27,7 +27,7 @@ class EkstrakurikulerController extends Controller
     {
         $extracurriculars = Extracurricular::paginate(10);
 
-        return view('admin.ekstrakurikuler.index', [
+        return $this->render('admin.ekstrakurikuler.index', [
             'title' => 'Ekstrakurikuler',
             'extracurriculars' => $extracurriculars
         ]);
@@ -45,7 +45,7 @@ class EkstrakurikulerController extends Controller
     {
         $pembina = User::where('role', 'pembina')->get();
 
-        return view('admin.ekstrakurikuler.create', [
+        return $this->render('admin.ekstrakurikuler.create', [
             'title' => 'Tambah Ekstrakurikuler',
             'pembina' => $pembina
         ]);
@@ -84,11 +84,17 @@ class EkstrakurikulerController extends Controller
         $extracurricular = Extracurricular::find($id);
         $pembina = $extracurricular->pembina;
 
-        return view('admin.ekstrakurikuler.show', [
+        return $this->render('admin.ekstrakurikuler.show', [
             'title' => 'Detail Ekstrakurikuler',
             'extracurricular' => $extracurricular,
             'pembina' => $pembina
         ]);
+
+        // return view('admin.ekstrakurikuler.show', [
+        //     'title' => 'Detail Ekstrakurikuler',
+        //     'extracurricular' => $extracurricular,
+        //     'pembina' => $pembina
+        // ]);
     }
 
     /**
@@ -105,7 +111,7 @@ class EkstrakurikulerController extends Controller
         $pembina = User::where('role', 'pembina')->get();
         $extracurricular = Extracurricular::find($id);
 
-        return view('admin.ekstrakurikuler.edit', [
+        return $this->render('admin.ekstrakurikuler.edit', [
             'title' => 'Edit Ekstrakurikuler',
             'pembina' => $pembina,
             'extracurricular' => $extracurricular
@@ -175,7 +181,7 @@ class EkstrakurikulerController extends Controller
         })
         ->paginate(10);
 
-        return view('pembina.ekstrakurikuler.index', [
+        return $this->render('pembina.ekstrakurikuler.index', [
             'title' => 'Ekstrakurikuler Saya',
             'extracurriculars' => $extracurriculars
         ]);
@@ -194,7 +200,7 @@ class EkstrakurikulerController extends Controller
     {
         $extracurricular = Extracurricular::find($id);
 
-        return view('pembina.ekstrakurikuler.peserta', [
+        return $this->render('pembina.ekstrakurikuler.peserta', [
             'title' => 'Peserta Ekstrakurikuler',
             'extracurricular' => $extracurricular,
         ]);
@@ -215,7 +221,7 @@ class EkstrakurikulerController extends Controller
             $query->where('user_id', $id);
         })->paginate(10);
 
-        return view('siswa.ekstrakurikuler.index', [
+        return $this->render('siswa.ekstrakurikuler.index', [
             'title' => 'Ekstrakurikuler Saya',
             'extracurriculars' => $extracurriculars
         ]);
@@ -235,7 +241,7 @@ class EkstrakurikulerController extends Controller
         // mengecek apakah siswa sudah menjadi peserta
         $registered = $extracurricular->participants->contains('id', Auth::user()->id);
 
-        return view('siswa.ekstrakurikuler.detail', [
+        return $this->render('siswa.ekstrakurikuler.detail', [
             'title' => 'Detail Ekstrakurikuler',
             'extracurricular' => $extracurricular,
             'registered' => $registered
@@ -349,7 +355,7 @@ class EkstrakurikulerController extends Controller
     {
         $extracurriculars = Extracurricular::paginate(10);
 
-        return view('siswa.ekstrakurikuler.list', [
+        return $this->render('siswa.ekstrakurikuler.list', [
             'title' => 'Semua Ekstrakurikuler',
             'extracurriculars' => $extracurriculars
         ]);

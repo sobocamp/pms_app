@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Enums\ToastType;
-use App\Enums\ToastMessage;
-use App\Helpers\RedirectHelper;
+use App\Enums\RedirectWithToast;
 use App\Http\Requests\PembinaStoreRequest;
 use App\Http\Requests\PembinaUpdateRequest;
 
@@ -24,7 +22,7 @@ class PembinaController extends Controller
     {
         $pembina = User::where('role', 'pembina')->paginate(10);
 
-        return view('admin.pembina.index', [
+        return $this->render('admin.pembina.index', [
             'title' => 'Pembina',
             'pembina' => $pembina
         ]);
@@ -40,7 +38,7 @@ class PembinaController extends Controller
      */
     public function create()
     {
-        return view('admin.pembina.create', [
+        return $this->render('admin.pembina.create', [
             'title' => 'Tambah Pembina'
         ]);
     }
@@ -65,11 +63,7 @@ class PembinaController extends Controller
         User::create($request->validated());
 
         // Redirect dengan toast
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('pembina.index'),
-            ToastType::SUCCESS,
-            ToastMessage::PEMBINA_CREATE_SUCCESS
-        );
+        return RedirectWithToast::PEMBINA_CREATE_SUCCESS->redirect('pembina.index');
     }
 
     /**
@@ -85,7 +79,7 @@ class PembinaController extends Controller
     {
         $pembina = User::find($id);
 
-        return view('admin.pembina.show', [
+        return $this->render('admin.pembina.show', [
             'title' => 'Detail Pembina',
             'pembina' => $pembina
         ]);
@@ -104,7 +98,7 @@ class PembinaController extends Controller
     {
         $pembina = User::find($id);
 
-        return view('admin.pembina.edit', [
+        return $this->render('admin.pembina.edit', [
             'title' => 'Edit Pembina',
             'pembina' => $pembina
         ]);
@@ -135,11 +129,7 @@ class PembinaController extends Controller
         User::find($id)->update($data);
 
         // Redirect dengan toast
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('pembina.index'),
-            ToastType::SUCCESS,
-            ToastMessage::PEMBINA_UPDATE_SUCCESS
-        );
+        return RedirectWithToast::PEMBINA_UPDATE_SUCCESS->redirect('pembina.index');
     }
 
     /**
@@ -157,10 +147,6 @@ class PembinaController extends Controller
         User::find($id)->delete();
 
         // Redirect dengan toast
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('pembina.index'),
-            ToastType::SUCCESS,
-            ToastMessage::PEMBINA_DELETE_SUCCESS
-        );
+        return RedirectWithToast::PEMBINA_DELETE_SUCCESS->redirect('pembina.index');
     }
 }
