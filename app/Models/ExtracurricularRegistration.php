@@ -24,7 +24,7 @@ use App\Models\RegistrationPeriod;
  *
  * @property-read User $student
  * @property-read Extracurricular $extracurricular
- * @property-read RegistrationPeriod $period
+ * @property-read RegistrationPeriod $registrationPeriod
  */
 class ExtracurricularRegistration extends Model
 {
@@ -65,7 +65,7 @@ class ExtracurricularRegistration extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function period(): BelongsTo
+    public function registrationPeriod(): BelongsTo
     {
         return $this->belongsTo(RegistrationPeriod::class, 'registration_period_id');
     }

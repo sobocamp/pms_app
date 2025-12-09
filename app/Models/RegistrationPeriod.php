@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\ExtracurricularRegistration;
+use App\Models\Extracurricular;
 
 /**
  * Class RegistrationPeriod
@@ -20,6 +22,7 @@ use App\Models\ExtracurricularRegistration;
  * @property \Illuminate\Support\Carbon|null $updated_at
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|ExtracurricularRegistration[] $registrations
+ * @property-read \Illuminate\Database\Eloquent\Collection|Extracurricular[] $extracurriculars
  */
 class RegistrationPeriod extends Model
 {
@@ -45,5 +48,11 @@ class RegistrationPeriod extends Model
     public function registrations(): HasMany
     {
         return $this->hasMany(ExtracurricularRegistration::class);
+    }
+
+    public function extracurriculars(): BelongsToMany
+    {
+        return $this->belongsToMany(Extracurricular::class, 'extracurricular_registrations')
+                    ->withPivot('status');
     }
 }

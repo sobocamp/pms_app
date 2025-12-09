@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\ExtracurricularRegistration;
 use App\Models\User;
+use App\Models\RegistrationPeriod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $pembina
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $participants
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $approvedParticipants
+ * @property-read \Illuminate\Database\Eloquent\Collection|RegistrationPeriod[] $registrationPeriods
  */
 class Extracurricular extends Model
 {
@@ -86,5 +88,18 @@ class Extracurricular extends Model
     {
         return $this->belongsToMany(User::class, 'extracurricular_registrations')
             ->wherePivot('status', 'approved');
+    }
+
+    /**
+     * Relasi many-to-many ke RegistrationPeriod.
+     *
+     * Setiap ekstrakurikuler bisa memiliki banyak periode pendaftaran aktif.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function activeRegistrations()
+    {
+        return $this->hasMany(ExtracurricularRegistration::class)
+            ->whereHas('registrationPeriod', fn ($q) => $q->where('is_active', true));
     }
 }

@@ -184,7 +184,11 @@ class EkstrakurikulerController extends Controller
     {
         $extracurriculars = Extracurricular::whereHas('pembina', function ($query) use ($id) {
             $query->where('user_id', $id);
-        })->paginate(10);
+        })
+        ->whereHas('registrations.registrationPeriod', function ($query) {
+            $query->where('is_active', true);
+        })
+        ->paginate(10);
 
         return view('pembina.ekstrakurikuler.index', [
             'title' => 'Ekstrakurikuler Saya',
