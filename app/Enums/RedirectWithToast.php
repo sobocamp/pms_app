@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ToastMessage: string
+enum RedirectWithToast: string
 {
     case EXTRACURRICULAR_CREATE_SUCCESS = 'Ekstrakurikuler berhasil disimpan';
     case EXTRACURRICULAR_CREATE_FAILURE = 'Ekstrakurikuler gagal disimpan';
@@ -36,4 +36,38 @@ enum ToastMessage: string
     case PERIOD_UPDATE_FAILURE = 'Periode pendaftaran gagal diperbarui';
     case PERIOD_DELETE_SUCCESS = 'Periode pendaftaran berhasil dihapus';
     case PERIOD_DELETE_FAILURE = 'Periode pendaftaran gagal dihapus';
+
+    /**
+     * Mendapatkan tipe toast berdasarkan nama enum.
+     */
+    public function type(): string
+    {
+        return str_contains($this->name, 'SUCCESS') ? 'success' : 'error';
+    }
+
+    /**
+     * Redirect elegan ke route tertentu.
+     */
+    public function redirect(string $route, array $params = [])
+    {
+        return redirect()
+            ->route($route, $params)
+            ->with('toast', [
+                'type' => $this->type(),
+                'message' => $this->value
+            ]);
+    }
+
+    /**
+     * Redirect elegan ke halaman sebelumnya.
+     */
+    public function back()
+    {
+        return redirect()
+            ->back()
+            ->with('toast', [
+                'type' => $this->type(),
+                'message' => $this->value
+            ]);
+    }
 }

@@ -25,14 +25,14 @@ enum ParticipantStatus: string
     /**
      * Pesan sukses berdasarkan status
      *
-     * @return ToastMessage
+     * @return RedirectWithToast
      */
-    public function successMessage(): ToastMessage
+    public function successMessage(): RedirectWithToast
     {
         return match ($this) {
-            self::APPROVED => ToastMessage::EXTRACURRICULAR_APPROVE_SUCCESS,
-            self::PENDING  => ToastMessage::EXTRACURRICULAR_PENDING_SUCCESS,
-            self::REJECTED => ToastMessage::EXTRACURRICULAR_REJECT_SUCCESS,
+            self::APPROVED => RedirectWithToast::EXTRACURRICULAR_APPROVE_SUCCESS,
+            self::PENDING  => RedirectWithToast::EXTRACURRICULAR_PENDING_SUCCESS,
+            self::REJECTED => RedirectWithToast::EXTRACURRICULAR_REJECT_SUCCESS,
         };
     }
 }

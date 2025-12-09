@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Enums\ToastType;
-use App\Enums\ToastMessage;
 use App\Enums\ParticipantStatus;
 use App\Traits\ExtracurricularHelper;
-use App\Helpers\RedirectHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Extracurricular;
 use App\Http\Requests\EkstrakurikulerRequest;
+use App\Enums\RedirectWithToast;
 
 class EkstrakurikulerController extends Controller
 {
@@ -69,11 +67,7 @@ class EkstrakurikulerController extends Controller
         $extracurricular->pembina()->sync($request->pembina_id);
 
         // Redirect dengan toast
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('extracurricular.index'),
-            ToastType::SUCCESS,
-            ToastMessage::EXTRACURRICULAR_CREATE_SUCCESS
-        );
+        return RedirectWithToast::EXTRACURRICULAR_CREATE_SUCCESS->redirect('extracurricular.index');
     }
 
     /**
@@ -136,12 +130,7 @@ class EkstrakurikulerController extends Controller
         $extracurricular->pembina()->sync($request->pembina_id);
 
         // Redirect dengan toast
-
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('extracurricular.index'),
-            ToastType::SUCCESS,
-            ToastMessage::EXTRACURRICULAR_UPDATE_SUCCESS
-        );
+        return RedirectWithToast::EXTRACURRICULAR_UPDATE_SUCCESS->redirect('extracurricular.index');
     }
 
     /**
@@ -164,11 +153,7 @@ class EkstrakurikulerController extends Controller
         $extracurricular->delete();
 
         // Redirect dengan toast
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('extracurricular.index'),
-            ToastType::SUCCESS,
-            ToastMessage::EXTRACURRICULAR_DELETE_SUCCESS
-        );
+        return RedirectWithToast::EXTRACURRICULAR_DELETE_SUCCESS->redirect('extracurricular.index');
     }
 
     /**
@@ -280,11 +265,7 @@ class EkstrakurikulerController extends Controller
 
         if (!$period) {
             // Redirect dengan toast
-            return RedirectHelper::backWithToast(
-                back(),
-                ToastType::ERROR,
-                ToastMessage::EXTRACURRICULAR_PERIOD_NOT_ACTIVE
-            );
+            return RedirectWithToast::EXTRACURRICULAR_PERIOD_NOT_ACTIVE->back();
         }
 
         // Hitung peserta approved
@@ -293,11 +274,7 @@ class EkstrakurikulerController extends Controller
         // Cek kuota
         if ($jumlahApproved >= $extracurricular->quota) {
             // Redirect dengan toast
-            return RedirectHelper::backWithToast(
-                back(),
-                ToastType::ERROR,
-                ToastMessage::EXTRACURRICULAR_QUOTA_EXCEEDED
-            );
+            return RedirectWithToast::EXTRACURRICULAR_QUOTA_EXCEEDED->back();
         }
 
         // Cek apakah sudah mendaftar pada periode ini
@@ -305,11 +282,7 @@ class EkstrakurikulerController extends Controller
 
         if ($alreadyJoined) {
             // Redirect dengan toast
-            return RedirectHelper::backWithToast(
-                back(),
-                ToastType::ERROR,
-                ToastMessage::EXTRACURRICULAR_REGISTRATION_FAILURE
-            );
+            return RedirectWithToast::EXTRACURRICULAR_REGISTRATION_FAILURE->back();
         }
 
         // Simpan ke pivot
@@ -320,11 +293,7 @@ class EkstrakurikulerController extends Controller
         ]);
 
         // Redirect dengan toast
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('extracurricular.detail', $extracurricular->id),
-            ToastType::SUCCESS,
-            ToastMessage::EXTRACURRICULAR_REGISTRATION_SUCCESS
-        );
+        return RedirectWithToast::EXTRACURRICULAR_REGISTRATION_SUCCESS->redirect('extracurricular.detail', [$extracurricular->id]);
     }
 
     /**
@@ -349,11 +318,7 @@ class EkstrakurikulerController extends Controller
 
         if (!$period) {
             // Redirect dengan toast
-            return RedirectHelper::backWithToast(
-                back(),
-                ToastType::ERROR,
-                ToastMessage::EXTRACURRICULAR_PERIOD_NOT_ACTIVE
-            );
+            return RedirectWithToast::EXTRACURRICULAR_PERIOD_NOT_ACTIVE->back();
         }
 
         // Cek apakah sudah mendaftar
@@ -361,22 +326,14 @@ class EkstrakurikulerController extends Controller
 
         if (!$alreadyJoined) {
             // Redirect dengan toast
-            return RedirectHelper::backWithToast(
-                back(),
-                ToastType::ERROR,
-                ToastMessage::EXTRACURRICULAR_UNREGISTER_FAILURE
-            );
+            return RedirectWithToast::EXTRACURRICULAR_UNREGISTER_FAILURE->back();
         }
 
         // Hapus dari pivot
         $extracurricular->participants()->detach($user->id);
 
         // Redirect dengan toast
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('extracurricular.detail', $extracurricular->id),
-            ToastType::SUCCESS,
-            ToastMessage::EXTRACURRICULAR_UNREGISTER_SUCCESS
-        );
+        return RedirectWithToast::EXTRACURRICULAR_UNREGISTER_SUCCESS->redirect('extracurricular.detail', [$extracurricular->id]);
     }
 
     /**
@@ -418,31 +375,19 @@ class EkstrakurikulerController extends Controller
         // periode aktif
         $period = $this->getActivePeriodOrFail();
         if (!$period) {
-            return RedirectHelper::backWithToast(
-                back(),
-                ToastType::ERROR,
-                ToastMessage::EXTRACURRICULAR_PERIOD_NOT_ACTIVE
-            );
+            return RedirectWithToast::EXTRACURRICULAR_PERIOD_NOT_ACTIVE->back();
         }
 
         // cek apakah user pernah daftar
         $joined = $this->checkAlreadyJoined($extracurricular, $user->id, $period->id);
         if (!$joined) {
-            return RedirectHelper::backWithToast(
-                back(),
-                ToastType::ERROR,
-                ToastMessage::EXTRACURRICULAR_NO_DATA_AVAILABLE
-            );
+            return RedirectWithToast::EXTRACURRICULAR_NO_DATA_AVAILABLE->back();
         }
 
         // update status
         $status->execute($extracurricular, $user->id);
 
-        return RedirectHelper::redirectWithToast(
-            redirect()->route('extracurricular.peserta', $extracurricular->id),
-            ToastType::SUCCESS,
-            $status->successMessage()
-        );
+        return $status->successMessage()->redirect('extracurricular.peserta', [$extracurricular->id]);
     }
 
     /**
