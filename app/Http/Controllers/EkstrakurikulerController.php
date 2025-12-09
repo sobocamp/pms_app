@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Enums\ToastType;
 use App\Enums\ToastMessage;
-use App\Helpers\RedirectHelper;
-use App\Models\Extracurricular;
-use Illuminate\Support\Facades\Auth;
+use App\Enums\ParticipantStatus;
 use App\Traits\ExtracurricularHelper;
-use App\Factories\ParticipantStatusFactory;
+use App\Helpers\RedirectHelper;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Extracurricular;
 use App\Http\Requests\EkstrakurikulerRequest;
 
 class EkstrakurikulerController extends Controller
@@ -410,10 +410,8 @@ class EkstrakurikulerController extends Controller
      * @param  string  $id  ID ekstrakurikuler.
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function updateStatus(string $id, string $userId, string $status, ToastMessage $successMessage)
+    private function updateStatus(string $id, string $userId, ParticipantStatus $status)
     {
-        ParticipantStatusFactory::validate($status);
-
         $extracurricular = Extracurricular::findOrFail($id);
         $user = User::findOrFail($userId);
 
@@ -438,13 +436,12 @@ class EkstrakurikulerController extends Controller
         }
 
         // update status
-        $extracurricular->participants()
-            ->updateExistingPivot($user->id, ['status' => $status]);
+        $status->execute($extracurricular, $user->id);
 
         return RedirectHelper::redirectWithToast(
             redirect()->route('extracurricular.peserta', $extracurricular->id),
             ToastType::SUCCESS,
-            $successMessage
+            $status->successMessage()
         );
     }
 
@@ -465,8 +462,7 @@ class EkstrakurikulerController extends Controller
         return $this->updateStatus(
             $id,
             $user_id,
-            'approved',
-            ToastMessage::EXTRACURRICULAR_APPROVE_SUCCESS
+            ParticipantStatus::APPROVED,
         );
     }
 
@@ -487,8 +483,7 @@ class EkstrakurikulerController extends Controller
         return $this->updateStatus(
             $id,
             $user_id,
-            'pending',
-            ToastMessage::EXTRACURRICULAR_PENDING_SUCCESS
+            ParticipantStatus::PENDING,
         );
     }
 
@@ -509,8 +504,7 @@ class EkstrakurikulerController extends Controller
         return $this->updateStatus(
             $id,
             $user_id,
-            'rejected',
-            ToastMessage::EXTRACURRICULAR_REJECT_SUCCESS
+            ParticipantStatus::REJECTED,
         );
     }
 }
