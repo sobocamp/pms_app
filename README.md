@@ -23,7 +23,7 @@ Aplikasi berbasis Laravel untuk mengelola kegiatan ekstrakurikuler dengan fitur 
 ## Instalasi
 ```bash
 git clone https://github.com/sobocamp/ekskul-app.git
-cd ekstrakurikuler
+cd ekskul-app
 composer install
 cp .env.example .env
 php artisan key:generate
