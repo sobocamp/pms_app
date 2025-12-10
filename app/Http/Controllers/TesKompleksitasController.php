@@ -54,13 +54,13 @@ class TesKompleksitasController extends Controller
     private function measure(Closure $func)
     {
         $startTime = microtime(true);
-        $startMemory = memory_get_usage(true);
+        $startMemory = memory_get_usage(false);
 
         $func();
 
         return [
             'time_ms' => round((microtime(true) - $startTime) * 1000, 3),
-            'memory_kb' => round((memory_get_usage(true) - $startMemory) / 1024, 3),
+            'memory_kb' => round((memory_get_usage(false) - $startMemory) / 1024, 3),
         ];
     }
 

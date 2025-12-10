@@ -22,8 +22,15 @@ class InitialSeeder extends Seeder
 
         // Pembina
         $pembina = User::create([
+            'name' => 'Eko Arif',
+            'email' => 'eko@ekstra.com',
+            'password' => Hash::make('password'),
+            'role' => 'pembina',
+        ]);
+
+        $pembina1 = User::create([
             'name' => 'Budi Santoso',
-            'email' => 'pembina@ekstra.com',
+            'email' => 'budi@ekstra.com',
             'password' => Hash::make('password'),
             'role' => 'pembina',
         ]);
@@ -31,7 +38,15 @@ class InitialSeeder extends Seeder
         // Siswa
         $siswa = User::create([
             'name' => 'Siti Aminah',
-            'email' => 'siswa@ekstra.com',
+            'email' => 'siti@ekstra.com',
+            'password' => Hash::make('password'),
+            'role' => 'siswa',
+        ]);
+
+        // Siswa
+        $siswa1 = User::create([
+            'name' => 'Bejo Margono',
+            'email' => 'bejo@ekstra.com',
             'password' => Hash::make('password'),
             'role' => 'siswa',
         ]);
@@ -40,12 +55,20 @@ class InitialSeeder extends Seeder
         Extracurricular::create([
             'name' => 'Pencak Silat',
             'description' => 'Ekstrakurikuler pencak silat dengan fokus pada seni bela diri tradisional Indonesia.',
-            'quota' => 30,
+            'quota' => 2,
+        ]);
+
+        Extracurricular::create([
+            'name' => 'Bulutangkis',
+            'description' => 'Ekstrakurikuler bulutangkis dengan fokus pada olahraga renang.',
+            'quota' => 2,
         ]);
 
         // Relasi pembina
-        $extracurricular = Extracurricular::first();
+        $extracurricular = Extracurricular::find(1);
         $extracurricular->pembina()->attach($pembina->id);
+        $extracurricular = Extracurricular::find(2);
+        $extracurricular->pembina()->attach($pembina1->id);
 
         // Periode pendaftaran awal
         RegistrationPeriod::create([
