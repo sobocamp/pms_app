@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PembinaController;
 use App\Http\Controllers\PeriodeController;
-use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EkstrakurikulerController;
@@ -27,7 +26,6 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('admin/extracurricular', EkstrakurikulerController::class);
     Route::resource('admin/pembina', PembinaController::class);
-    Route::resource('admin/peserta', PesertaController::class);
     Route::resource('admin/periode', PeriodeController::class);
 });
 
