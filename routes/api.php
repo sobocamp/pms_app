@@ -1,6 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\EkstrakurikulerController;
+use App\Http\Controllers\Api\ProductController;
 
-Route::apiResource('/ekstrakurikuler', EkstrakurikulerController::class);
+Route::apiResource('/product', ProductController::class);

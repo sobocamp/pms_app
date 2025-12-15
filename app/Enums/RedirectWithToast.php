@@ -4,38 +4,26 @@ namespace App\Enums;
 
 enum RedirectWithToast: string
 {
-    case EXTRACURRICULAR_CREATE_SUCCESS = 'Ekstrakurikuler berhasil disimpan';
-    case EXTRACURRICULAR_CREATE_FAILURE = 'Ekstrakurikuler gagal disimpan';
-    case EXTRACURRICULAR_UPDATE_SUCCESS = 'Ekstrakurikuler berhasil diperbarui';
-    case EXTRACURRICULAR_UPDATE_FAILURE = 'Ekstrakurikuler gagal diperbarui';
-    case EXTRACURRICULAR_DELETE_SUCCESS = 'Ekstrakurikuler berhasil dihapus';
-    case EXTRACURRICULAR_DELETE_FAILURE = 'Ekstrakurikuler gagal dihapus';
+    case PRODUCT_CREATE_SUCCESS = 'Produk berhasil ditambahkan';
+    case PRODUCT_CREATE_FAILURE = 'Produk gagal ditambahkan';
+    case PRODUCT_UPDATE_SUCCESS = 'Produk berhasil diperbarui';
+    case PRODUCT_UPDATE_FAILURE = 'Produk gagal diperbarui';
+    case PRODUCT_DELETE_SUCCESS = 'Produk berhasil dihapus';
+    case PRODUCT_DELETE_FAILURE = 'Produk gagal dihapus';
 
-    case EXTRACURRICULAR_PERIOD_NOT_ACTIVE = 'Periode registrasi belum dibuka';
-    case EXTRACURRICULAR_QUOTA_EXCEEDED = 'Kuota untuk ekstrakurikuler ini sudah penuh';
+    case PENGGUNA_CREATE_SUCCESS = 'Pengguna berhasil ditambahkan';
+    case PENGGUNA_CREATE_FAILURE = 'Pengguna gagal ditambahkan';
+    case PENGGUNA_UPDATE_SUCCESS = 'Pengguna berhasil diperbarui';
+    case PENGGUNA_UPDATE_FAILURE = 'Pengguna gagal diperbarui';
+    case PENGGUNA_DELETE_SUCCESS = 'Pengguna berhasil dihapus';
+    case PENGGUNA_DELETE_FAILURE = 'Pengguna gagal dihapus';
 
-    case EXTRACURRICULAR_REGISTRATION_SUCCESS = 'Registrasi ekstrakurikuler berhasil dilakukan';
-    case EXTRACURRICULAR_REGISTRATION_FAILURE = 'Anda sudah mendaftar ekstrakurikuler pada periode ini';
-    case EXTRACURRICULAR_UNREGISTER_SUCCESS = 'Unregistrasi ekstrakurikuler berhasil dilakukan';
-    case EXTRACURRICULAR_UNREGISTER_FAILURE = 'Anda belum mendaftar ekstrakurikuler pada periode ini';
-    case EXTRACURRICULAR_APPROVE_SUCCESS = 'Approval ekstrakurikuler berhasil dilakukan';
-    case EXTRACURRICULAR_PENDING_SUCCESS = 'Pending ekstrakurikuler berhasil dilakukan';
-    case EXTRACURRICULAR_REJECT_SUCCESS = 'Rejection ekstrakurikuler berhasil dilakukan';
-    case EXTRACURRICULAR_NO_DATA_AVAILABLE = 'Tidak ada data yang tersedia';
-
-    case PEMBINA_CREATE_SUCCESS = 'Pembina berhasil ditambahkan';
-    case PEMBINA_CREATE_FAILURE = 'Pembina gagal ditambahkan';
-    case PEMBINA_UPDATE_SUCCESS = 'Pembina berhasil diperbarui';
-    case PEMBINA_UPDATE_FAILURE = 'Pembina gagal diperbarui';
-    case PEMBINA_DELETE_SUCCESS = 'Pembina berhasil dihapus';
-    case PEMBINA_DELETE_FAILURE = 'Pembina gagal dihapus';
-
-    case PERIOD_CREATE_SUCCESS = 'Periode pendaftaran berhasil ditambahkan';
-    case PERIOD_CREATE_FAILURE = 'Periode pendaftaran gagal ditambahkan';
-    case PERIOD_UPDATE_SUCCESS = 'Periode pendaftaran berhasil diperbarui';
-    case PERIOD_UPDATE_FAILURE = 'Periode pendaftaran gagal diperbarui';
-    case PERIOD_DELETE_SUCCESS = 'Periode pendaftaran berhasil dihapus';
-    case PERIOD_DELETE_FAILURE = 'Periode pendaftaran gagal dihapus';
+    case PEMBELIAN_CREATE_SUCCESS = 'Pembelian berhasil ditambahkan';
+    case PEMBELIAN_CREATE_FAILURE = 'Pembelian gagal ditambahkan';
+    case PEMBELIAN_UPDATE_SUCCESS = 'Pembelian berhasil diperbarui';
+    case PEMBELIAN_UPDATE_FAILURE = 'Pembelian gagal diperbarui';
+    case PEMBELIAN_DELETE_SUCCESS = 'Pembelian berhasil dihapus';
+    case PEMBELIAN_DELETE_FAILURE = 'Pembelian gagal dihapus';
 
     /**
      * Mendapatkan tipe toast berdasarkan nama enum.

@@ -64,7 +64,7 @@ app/
 ---
 
 ## Instalasi
-1. Clone repository: `git clone https://github.com/sobocamp/pms-app.git`
+1. Clone repository: `git clone https://github.com/sobocamp/pms_app.git`
 2. Copy file `.env.example` menjadi `.env`
 3. Buat database baru: `php artisan migrate`
 4. Jalankan perintah `composer install`

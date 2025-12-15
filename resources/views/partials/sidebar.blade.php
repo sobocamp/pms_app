@@ -2,7 +2,7 @@
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="index-2.html">
             <span class="sidebar-brand-text align-middle">
-                SIMEKSTRA
+                SIMPMS
                 <sup><small class="badge bg-primary text-uppercase">Skansawa</small></sup>
             </span>
             <svg class="sidebar-brand-icon align-middle" width="32px" height="32px" viewBox="0 0 24 24" fill="none"
@@ -58,24 +58,35 @@
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
-            <li class="sidebar-item {{ request()->routeIs('extracurricular.*') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ route('extracurricular.index') }}">
+            <li class="sidebar-item {{ request()->routeIs('produk.*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('produk.index') }}">
                     <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Data
-                        Ekstrakurikuler</span>
+                        Produk</span>
                 </a>
             </li>
-            <li class="sidebar-item {{ request()->routeIs('pembina.*') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ route('pembina.index') }}">
+            <li class="sidebar-item {{ request()->routeIs('pengguna.*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('pengguna.index') }}">
                     <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Data
-                        Pembina</span>
+                        Pengguna</span>
                 </a>
             </li>
+            <li class="sidebar-item {{ request()->routeIs('pembelian.*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('pembelian.index') }}">
+                    <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Pembelian</span>
+                </a>
+            </li>
+            <li class="sidebar-item {{ request()->routeIs('penjualan.*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('penjualan.index') }}">
+                    <i class="align-middle" data-feather="shopping-bag"></i> <span class="align-middle">Penjualan</span>
+                </a>
+            </li>
+            {{--
             <li class="sidebar-item {{ request()->routeIs('periode.*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('periode.index') }}">
                     <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Periode
                         Pendaftaran</span>
                 </a>
-            </li>
+            </li> --}}
             {{-- <li class="sidebar-item {{ request()->routeIs('siswa.*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('siswa.index') }}">
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Data Siswa</span>
@@ -83,7 +94,7 @@
             </li> --}}
             @endif
 
-            @if(auth()->user()->role === 'pembina')
+            @if(auth()->user()->role === 'gudang')
             <li class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('dashboard') }}">
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>

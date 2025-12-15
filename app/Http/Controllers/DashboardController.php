@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Pembelian;
+use App\Models\Penjualan;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -21,7 +25,11 @@ class DashboardController extends Controller
     {
         // cek role user, lalu pindahkan ke halaman dashboard yang sesuai
         if (Auth::user()->role == 'admin') {
-            return view('admin.dashboard.index');
+            $products = Product::count();
+            $users = User::count();
+            $pembelian = Pembelian::sum('total');
+            $penjualan = Penjualan::sum('total');
+            return view('admin.dashboard.index', compact('products', 'users', 'pembelian', 'penjualan'));
         } elseif (Auth::user()->role == 'pembina') {
             return view('pembina.dashboard.index');
         } elseif (Auth::user()->role == 'siswa') {
