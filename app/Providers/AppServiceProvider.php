@@ -22,14 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (!Schema::hasTable('registration_periods')) {
-            View::share('periodeAktif', null);
-            return;
-        }
-
-        $periodeAktif = RegistrationPeriod::where('is_active', '1')->first();
-
-        // Share ke semua view
-        View::share('periodeAktif', $periodeAktif);
+        //
     }
 }

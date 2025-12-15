@@ -2,11 +2,13 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PembinaController;
 use App\Http\Controllers\PeriodeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EkstrakurikulerController;
+use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\TesKompleksitasController;
 
 Route::get('/', function () {
@@ -24,25 +26,27 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('admin/extracurricular', EkstrakurikulerController::class);
-    Route::resource('admin/pembina', PembinaController::class);
-    Route::resource('admin/periode', PeriodeController::class);
+    Route::resource('admin/produk', ProductController::class);
+    Route::resource('admin/pengguna', PenggunaController::class);
+    Route::resource('admin/pembelian', PembelianController::class);
+    Route::resource('admin/penjualan', PenjualanController::class);
+    // Route::resource('admin/periode', PeriodeController::class);
 });
 
-Route::middleware(['auth', 'role:pembina'])->group(function () {
-    Route::get('pembina/extracurricular/{id}', [EkstrakurikulerController::class, 'ekstrakurikulerPembina'])->name('extracurricular.pembina');
-    Route::get('pembina/extracurricular/{id}/peserta', [EkstrakurikulerController::class, 'peserta'])->name('extracurricular.peserta');
-    Route::get('pembina/extracurricular/{id}/approve/{user_id}', [EkstrakurikulerController::class, 'approve'])->name('extracurricular.approve');
-    Route::get('pembina/extracurricular/{id}/pending/{user_id}', [EkstrakurikulerController::class, 'pending'])->name('extracurricular.pending');
-    Route::get('pembina/extracurricular/{id}/reject/{user_id}', [EkstrakurikulerController::class, 'reject'])->name('extracurricular.reject');
+Route::middleware(['auth', 'role:gudang'])->group(function () {
+    Route::get('pembina/extracurricular/{id}', [ProductController::class, 'ekstrakurikulerPembina'])->name('extracurricular.pembina');
+    Route::get('pembina/extracurricular/{id}/peserta', [ProductController::class, 'peserta'])->name('extracurricular.peserta');
+    Route::get('pembina/extracurricular/{id}/approve/{user_id}', [ProductController::class, 'approve'])->name('extracurricular.approve');
+    Route::get('pembina/extracurricular/{id}/pending/{user_id}', [ProductController::class, 'pending'])->name('extracurricular.pending');
+    Route::get('pembina/extracurricular/{id}/reject/{user_id}', [ProductController::class, 'reject'])->name('extracurricular.reject');
 });
 
 Route::middleware(['auth', 'role:siswa'])->group(function () {
-    Route::get('siswa/extracurricular/{id}', [EkstrakurikulerController::class, 'ekstrakurikulerSiswa'])->name('extracurricular.siswa');
-    Route::get('siswa/extracurricular/{id}/detail', [EkstrakurikulerController::class, 'ekstrakurikulerDetail'])->name('extracurricular.detail');
-    Route::post('siswa/extracurricular/{id}/register', [EkstrakurikulerController::class, 'register'])->name('extracurricular.register');
-    Route::post('siswa/extracurricular/{id}/unregister', [EkstrakurikulerController::class, 'unregister'])->name('extracurricular.unregister');
-    Route::get('siswa/extracurricular', [EkstrakurikulerController::class, 'ekstrakurikulerSemua'])->name('extracurricular');
+    Route::get('siswa/extracurricular/{id}', [ProductController::class, 'ekstrakurikulerSiswa'])->name('extracurricular.siswa');
+    Route::get('siswa/extracurricular/{id}/detail', [ProductController::class, 'ekstrakurikulerDetail'])->name('extracurricular.detail');
+    Route::post('siswa/extracurricular/{id}/register', [ProductController::class, 'register'])->name('extracurricular.register');
+    Route::post('siswa/extracurricular/{id}/unregister', [ProductController::class, 'unregister'])->name('extracurricular.unregister');
+    Route::get('siswa/extracurricular', [ProductController::class, 'ekstrakurikulerSemua'])->name('extracurricular');
 });
 
 Route::get('tes-kompleksitas', [TesKompleksitasController::class, 'analyze'])->name('tes-kompleksitas');

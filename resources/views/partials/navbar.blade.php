@@ -12,19 +12,6 @@
         </div>
     </form>
 
-    @if ($periodeAktif)
-    <div class="rounded px-3 py-2 d-flex align-items-center">
-        <i class="align-middle me-2" data-feather="calendar"></i>
-        <span class="fw-bold me-2">Periode:</span>
-        <span class="badge bg-success px-3 py-2">{{ $periodeAktif->name }}</span>
-    </div>
-    @else
-    <div class="rounded px-3 py-2 d-flex align-items-center">
-        <i class="align-middle me-2" data-feather="alert-circle"></i>
-        <span class="badge bg-danger px-3 py-2">Tidak ada periode aktif</span>
-    </div>
-    @endif
-
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav navbar-align">
             <li class="nav-item dropdown">
